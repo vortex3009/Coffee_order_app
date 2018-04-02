@@ -1,0 +1,105 @@
+package com.example.android.justjava2;
+
+
+
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.content.Intent;
+public class MainActivity extends AppCompatActivity {
+
+@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+    int quantity =0;
+    public void submitOrder(View view) {
+        int price =5;
+       EditText edit= (EditText) findViewById(R.id.edit_text_view);
+        String name = (edit.getText()).toString();
+
+
+
+        CheckBox whipped= (CheckBox) findViewById(R.id.whipped_checkobx_view);
+        boolean w= whipped.isChecked();
+        CheckBox chocolate= (CheckBox) findViewById(R.id.chocolate_checkbox_view);
+        boolean c= chocolate.isChecked();
+        if(w)
+        {
+         price = price +1;
+        }
+        if(c)
+        {
+            price=price+2;
+        }
+
+      String v2 =  displaymessage(name , w , c , price);
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:shubham.kps3009@gmail.com"));
+        intent.putExtra(intent.EXTRA_TEXT , v2);
+        intent.putExtra(intent.EXTRA_SUBJECT, "coffee order for" + name);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+        
+        
+        
+         }
+
+    private void display(int number) {
+        TextView qt = (TextView) findViewById(R.id.quantity_text_view);
+        qt.setText(" "+ number);
+
+
+    }
+
+
+    public void increament(View view)
+    {
+        quantity+=1;
+
+        display(quantity);
+    }
+     public void decreament(View view)
+    {
+        quantity-=1;
+
+        if (quantity<0)
+        {
+            quantity=0;
+        }
+
+        display(quantity);
+    }
+
+
+    public String displaymessage( String value , boolean w1 , boolean w2 , int p )
+
+
+
+ String u1 ,u2,u3,v1;
+
+        u1= "name  : "+ value ;
+        u2 = "want whicppedCream topping? : "+w1;
+        u3 =" want chocolate topping? : "+w2;
+       int u4 = (p*quantity);
+
+
+        v1= u1 +'\n'+ u2 +'\n'+ u3 +'\n'+ "total price is : "+ u4 ;
+
+return  v1;
+
+    }
+
+
+
+
+
+
+}
